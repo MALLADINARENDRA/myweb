@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FIRE GADGETS</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d1117;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: #161b22;
+      box-shadow: 0 0 10px #58a6ff44;
+    }
+
+    .top-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .top-buttons button {
+      margin-left: 10px;
+      padding: 10px 16px;
+      background: #238636;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .top-buttons button:hover {
+      background: #2ea043;
+    }
+
+    .goto-website {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .goto-website button {
+      padding: 12px 20px;
+      background-color: #238636;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #58a6ff55;
+    }
+
+    .goto-website button:hover {
+      background-color: #2ea043;
+    }
+
+    .products-container {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .product-box {
+      width: 200px;
+      height: 200px;
+      background-color: #161b22;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #58a6ff44;
+      position: relative;
+      animation: flicker 1.5s infinite alternate;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      overflow: hidden;
+    }
+
+    .product-box img {
+      width: 130%;
+      height: 160px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    @keyframes flicker {
+      0% {
+        box-shadow: 0 0 15px #58a6ff66, inset 0 0 10px #58a6ff22;
+      }
+      100% {
+        box-shadow: 0 0 25px #58a6ffbb, inset 0 0 20px #58a6ff44;
+      }
+    }
+
+    .floating-stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .floating-stars span {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      animation: moveStars 10s linear infinite;
+    }
+
+    @keyframes moveStars {
+      from {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+    }
+
+    .marquee {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #161b22;
+      padding: 10px 0;
+      overflow: hidden;
+      border-top: 2px solid #58a6ff44;
+      box-shadow: 0 -5px 15px #58a6ff22;
+    }
+
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      white-space: nowrap;
+      animation: scrollText 25s linear infinite;
+      color: #c9d1d9;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    @keyframes scrollText {
+      from {
+        transform: translateX(0%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛒 THE GADGETS ARE IN YOUR HAND</h1>
+  </header>
+
+  <div class="top-buttons">
+    <button onclick="alert('Login modal here')">Login</button>
+    <button onclick="alert('Sign Up modal here')">Sign Up</button>
+  </div>
+
+  <div class="goto-website">
+    <button onclick="window.location.href='clickme.html'">Go To Website</button>
+  </div>
+
+  <div class="products-container">
+    <div class="product-box">
+      <img src="bat.jpg">
+      <div>Bats</div>
+    </div>
+    <div class="product-box">
+      <img src="smartphone.jpg">
+      <div>Smartphone</div>
+    </div>
+    <div class="product-box">
+      <img src="smartwatch.jpg">
+      <div>Smartwatch</div>
+    </div>
+  </div>
+
+  <div class="marquee">
+    <span>
+      📢 Hot Offers on Camera | Smartphone | Watch | Laptop | Headphones | Tablet | Gaming Console | Smart TV | Accessories | Shop Now!
+    </span>
+  </div>
+
+  <div class="floating-stars">
+    <span style="left: 10%; animation-delay: 0s;"></span>
+    <span style="left: 25%; animation-delay: 2s;"></span>
+    <span style="left: 40%; animation-delay: 4s;"></span>
+    <span style="left: 60%; animation-delay: 1s;"></span>
+    <span style="left: 80%; animation-delay: 3s;"></span>
+    <span style="left: 95%; animation-delay: 5s;"></span>
+  </div>
+</body>
+</html>

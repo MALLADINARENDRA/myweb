@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Detail</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      animation: fadeIn 1s ease-in;
+    }
+
+    h1 {
+      font-size: 28px;
+      border-bottom: 2px solid #30363d;
+      padding-bottom: 10px;
+    }
+
+    .product-section {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .product-img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      animation: slideInLeft 1s;
+    }
+
+    .info {
+      flex: 1;
+      animation: slideInRight 1s;
+    }
+
+    .price {
+      color: #58a6ff;
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      margin-top: 5px;
+    }
+
+    button {
+      background-color: #238636;
+      color: white;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    button:hover {
+      background-color: #2ea043;
+    }
+
+    .features {
+      margin-top: 15px;
+      background-color: #161b22;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .related {
+      margin-top: 40px;
+    }
+
+    .related h2 {
+      border-bottom: 1px solid #30363d;
+      margin-bottom: 20px;
+    }
+
+    .related-products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .related-item {
+      width: 180px;
+      background: #161b22;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .related-item:hover {
+      transform: scale(1.05);
+      background-color: #1f2937;
+    }
+
+    .related-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="clickme.html">← Back to Products</a>
+    <h1 id="productName">Product Name</h1>
+
+    <div class="product-section">
+      <img src="https://via.placeholder.com/300" alt="Product Image" class="product-img" id="productImage">
+      <div class="info">
+        <p class="price" id="productPrice">₹29,999</p>
+        <p><strong>Color:</strong> <span id="productColor">Black</span></p>
+
+        <div class="features" id="productFeatures">
+          <h4>Features:</h4>
+          <ul>
+            <li>Fast charging</li>
+            <li>Waterproof</li>
+            <li>Bluetooth 5.1</li>
+          </ul>
+        </div>
+
+        <label for="quantity">Quantity:</label>
+        <select id="quantity">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+
+        <br><br>
+        <button onclick="addToCart()">Add to Cart</button>
+        <button onclick="buyNow()">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="related">
+      <h2>Related Products</h2>
+      <div class="related-products">
+        <div class="related-item">
+          <img src="smartphone.jpg">
+          <p>Smartphone</p>
+          <p>₹24,999</p>
+        </div>
+        <div class="related-item">
+          <img src="headphones.jpg">
+          <p>headphones</p>
+          <p>₹3,299</p>
+        </div>
+        <div class="related-item">
+          <img src="tablet.jpg">
+          <p>Tablet</p>
+          <p>₹15,499</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Example: dynamic product loading (can be expanded)
+    const product = {
+      name: "Wireless Headphones",
+      price: "₹2,999",
+      image: "Headphones.jpg",
+      color: "Black",
+      features: ["Noise Cancellation", "20 Hours Battery", "Lightweight"]
+    };
+
+    document.getElementById("productName").innerText = product.name;
+    document.getElementById("productPrice").innerText = product.price;
+    document.getElementById("productImage").src = product.image;
+    document.getElementById("productColor").innerText = product.color;
+
+    const featuresList = product.features.map(f => `<li>${f}</li>`).join('');
+    document.getElementById("productFeatures").innerHTML = `
+      <h4>Features:</h4><ul>${featuresList}</ul>
+    `;
+
+    function addToCart() {
+      const qty = document.getElementById("quantity").value;
+      alert(`🛒 ${qty} ${product.name} added to cart.`);
+    }
+
+    function buyNow() {
+      alert(`💳 Buying ${product.name} now...`);
+    }
+  </script>
+</body>
+</html>
+

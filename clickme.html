@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom right, #f0f8ff, #ffffff);
+    }
+
+    header {
+      background-color: #2196f3;
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back-btn {
+      background: white;
+      color: #2196f3;
+      padding: 8px 14px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .cart-icon {
+      background: white;
+      color: #2196f3;
+      border-radius: 50%;
+      padding: 10px 14px;
+      font-size: 16px;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .cart-icon span {
+      background: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 12px;
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      animation: bounce 0.3s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .search-bar {
+      margin: 20px auto;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .search-bar input {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 20px;
+      border: 1px solid #aaa;
+      outline: none;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      width: 220px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      background: #f5f5f5;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .card p {
+      margin: 0;
+      color: green;
+      font-weight: bold;
+    }
+
+    .card button {
+      margin: 8px 6px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .card .btn-cart { background-color: #ffc107; }
+    .card .btn-buy { background-color: #4caf50; color: white; }
+    .card .btn-view { background-color: #2196f3; color: white; }
+
+    /* Toast Style */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #323232;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.5s ease;
+      z-index: 9999;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-btn">← Back</a>
+    <h2>🛒 Online Store</h2>
+    <a href="cart.html" class="cart-icon">
+      🛒<span id="cartCount">0</span>
+    </a>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍 Search for products..." oninput="filterProducts()" />
+  </div>
+
+  <div class="products" id="productList">
+    <!-- JS will insert product cards here -->
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast"></div>
+
+  <script>
+    const products = [
+      { name: "Smartphone", price: 15999, image: "smartphone.jpg" },
+      { name: "Laptop", price: 55999, image: "Laptop.jpg" },
+      { name: "Camera", price: 29999, image: "Camera.jpg" },
+      { name: "Smart Watch", price: 4499, image: "smartWatch.jpg" },
+      { name: "Speaker", price: 1499, image: "Speaker.jpg" },
+      { name: "Tablet", price: 10499, image: "tablet.jpg" },
+      { name: "Monitor", price: 8999, image: "Monitor.jpg" },
+      { name: "Headphones", price: 1299, image: "Headphones.jpg" },
+      { name: "Drone", price: 25999, image: "Drone.jpg" },
+      { name: "Keyboard", price: 599, image: "Keyboard.jpg" },
+      { name: "Mouse", price: 399, image: "Mouse.jpg" }
+    ];
+
+    const productList = document.getElementById("productList");
+
+    function displayProducts(list) {
+      productList.innerHTML = "";
+      list.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>₹${product.price}</p>
+          <button class="btn-cart" onclick="addToCart('${product.name}')">Add to Cart</button>
+          <button class="btn-buy" onclick="buyNow('${product.name}')">Buy Now</button>
+          <button class="btn-view" onclick="viewProduct('${product.name}')">View Product</button>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    function addToCart(name) {
+      const item = products.find(p => p.name === name);
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ ...item, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      showToast(`🛒 ${name} added to cart`);
+    }
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const count = document.getElementById("cartCount");
+      count.textContent = cart.length;
+      count.style.animation = 'bounce 0.3s';
+      setTimeout(() => count.style.animation = '', 300);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.style.opacity = "1";
+      toast.style.transform = "translateY(0)";
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(50px)";
+      }, 3000);
+    }
+
+    function buyNow(name) {
+      alert(`🛍️ Buying ${name} now!`);
+    }
+
+    function viewProduct(name) {
+      const encoded = encodeURIComponent(name);
+      window.location.href = `product-detail.html?name=${encoded}`;
+    }
+
+    function filterProducts() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(keyword));
+      displayProducts(filtered);
+    }
+
+    displayProducts(products);
+    updateCartCount();
+  </script>
+</body>
+</html>
